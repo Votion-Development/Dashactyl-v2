@@ -1,7 +1,7 @@
 import { createHash } from 'crypto';
 import { Db, MongoClient } from 'mongodb';
-import load from '../helpers/settings';
-import { Account, Settings } from '../helpers/structs';
+import load from '../structures/settings';
+import { Account, Settings } from '../structures';
 import defaults from './defaults';
 import log from '../logger';
 import panel from '../panel';
@@ -58,15 +58,7 @@ export async function createAccount(
     const user = await getAccount(email);
     if (user) throw new Error('An account with these credentials already exists.');
 
-    const acc = await panel.getUser(email);
-    if (!acc.exists) await panel.createUser(
-        email,
-        username,
-        username,
-        email.split('@')[0],
-        password
-    );
-
+    const acc = await panel.fetchOrCreateUser(username, email, password);
     password = createHash('sha256')
         .update(password)
         .digest()
@@ -101,6 +93,14 @@ export async function deleteAccount(email: string) {
         .findOneAndDelete({ email });
 }
 
+export async function fetchKeys() {
+    return await cursor.collection('keys').find({}).toArray();
+}
+
+export async function getKey(code: string) {
+    return await cursor.collection('keys').findOne({ code });
+}
+
 export default {
     accounts:{
         fetch: fetchAccounts,
@@ -112,5 +112,9 @@ export default {
     settings:{
         get: getSettings,
         update: updateSettings
+    },
+    keys:{
+        fetch: fetchKeys,
+        get: getKey
     }
 }

@@ -1,5 +1,5 @@
 import * as assert from 'assert';
-import type { BaseSettings } from './helpers/settings';
+import type { BaseSettings } from './structures/settings';
 
 export default function (data: BaseSettings): void {
     assert.strictEqual(typeof data.port, 'number', 'Port must be a number.');

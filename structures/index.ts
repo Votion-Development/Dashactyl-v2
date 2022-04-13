@@ -15,6 +15,14 @@ export interface Account {
     */
 }
 
+export interface APIKey {
+    code:           string;
+    permissions:    string[];
+    createdBy:      string;
+    createdAt:      number;
+    lastUsedAt:     number;
+}
+
 export interface Coupon {
     code:       string;
     uses:       number;

@@ -5,7 +5,7 @@ import log from '../logger';
 const COLLECTIONS = [
     'sessions', 'settings', 'users',
     'coupons', 'packages', 'eggs',
-    'blacklist'
+    'blacklist', 'keys'
 ]
 
 export default async function preload(cursor: MongoClient, dbName: string): Promise<void> {

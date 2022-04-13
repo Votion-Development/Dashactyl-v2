@@ -1,0 +1,19 @@
+port: 3000
+debug: false
+secret: ""
+
+pterodactyl:
+  url: ""
+  key: ""
+
+database:
+  uri: ""
+  name: dashactyl
+
+discord:
+  id: ""
+  secret: ""
+  token: ""
+  callback: http://localhost:3000/auth/callback
+  guildId: ""
+  invite: https://discord.gg/kTw8x4CH9c

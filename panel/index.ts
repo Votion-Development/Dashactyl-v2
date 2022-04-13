@@ -1,6 +1,7 @@
 import fetch from 'node-fetch';
-import load from '../helpers/settings';
-import { Response } from '../helpers/structs';
+import load from '../structures/settings';
+import { Response } from '../structures';
+import { Server, User } from '../structures/panel';
 
 const { pterodactyl } = load();
 
@@ -11,7 +12,8 @@ async function _fetch<T = {}>(
 ): Promise<Response<T>> {
     const body = data ? JSON.stringify(data) : undefined;
 
-    const res = await fetch(pterodactyl.url + path, {
+    console.log(`${pterodactyl.url}/api/application${path}`);
+    const res = await fetch(`${pterodactyl.url}/api/application${path}`, {
         method,
         body,
         headers:{
@@ -23,62 +25,34 @@ async function _fetch<T = {}>(
 
     if (res.status === 204) return {} as Response<T>;
     if ([200, 201, 202].includes(res.status)) return await res.json();
-    if (res.status < 500) await res.json().then(Error);
+    if (res.status < 500) await res.json().then(d => { throw new Error(d.errors[0].code) });
     throw new Error(`Pterodactyl could not be contacted (status: ${res.status}).`);
 }
 
-async function getUserRaw(email: string): Promise<Response<any>> {
-    return await _fetch('GET', `/api/application/users?filter[email]=${email}`);
-}
-
-export async function getUser(email: string): Promise<{
-    exists: boolean;
-    admin: boolean;
-}> {
-    try {
-        const user = await getUserRaw(email);
-        return {
-            exists: true,
-            admin: user.attributes['root_admin']
-        }
-    } catch {
-        return { exists: false, admin: false }
-    }
-}
-
-export async function createUser(
-    email: string,
+export async function fetchOrCreateUser(
     username: string,
-    firstname: string,
-    lastname: string,
+    email: string,
     password: string
-): Promise<boolean> {
-    const user = await getUser(email);
-    if (user.exists) return Promise.resolve(false);
+    ): Promise<User> {
+    let user = await _fetch<User>('GET', `/users?filter[email]=${email}`).catch(()=>{});
+    if (user) return user.attributes!;
 
-    await _fetch(
-        'POST',
-        '/api/application/users',
-        {
-            email,
-            username,
-            first_name: firstname,
-            last_name: lastname,
-            password
-        }
-    );
-
-    return true;
+    user = await _fetch('POST', '/users', {
+        username,
+        email,
+        first_name: username,
+        last_name: username,
+        password
+    });
+    return user.attributes!;
 }
 
-export async function deleteUser(email: string): Promise<void> {
-    const user = await getUserRaw(email).catch(null);
-    if (!user) return;
-    await _fetch('DELETE', `/api/application/users/${user.attributes['id']}`);
+export async function fetchServers(email: string): Promise<Server[]> {
+    const servers = await _fetch<Server>('GET', `/users?filter=[email]=${email}&include=servers`);
+    return servers.data!;
 }
 
 export default {
-    getUser,
-    createUser,
-    deleteUser
+    fetchOrCreateUser,
+    fetchServers
 }

@@ -1,4 +1,4 @@
-import { Egg, Package, Resource } from '../helpers/structs';
+import { Egg, Package, Resource } from '../structures';
 
 function getDefaultEgg(): Egg {
     return {

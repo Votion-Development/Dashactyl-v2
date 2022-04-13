@@ -1,12 +1,13 @@
 import * as ejs from 'ejs';
+import { join } from 'path';
 import fastify from 'fastify';
 import cookie from 'fastify-cookie';
 import session from '@fastify/session';
-import { join } from 'path';
+import formbody from 'fastify-formbody';
 import pointOfView from 'point-of-view';
 import { init } from './database';
 import log from './logger';
-import load from './helpers/settings';
+import load from './structures/settings';
 import routers from './routers';
 import validate from './validate';
 
@@ -21,6 +22,7 @@ app.register(session, {
         secure: true
     }
 });
+app.register(formbody);
 
 app.register(pointOfView, {
     engine: { ejs },
@@ -29,6 +31,7 @@ app.register(pointOfView, {
 
 app.register((api, _, done) => routers.general(api, done));
 app.register((api, _, done) => routers.auth(api, done));
+app.register((api, _, done) => routers.api(api, done));
 
 app.setErrorHandler((err, _, reply) => {
     reply.view('errors.ejs', {
@@ -49,7 +52,7 @@ app.setErrorHandler((err, _, reply) => {
     }
 
     app.listen(settings.port, (err, _) => {
-        if (err) throw err;
+        if (err) log.fatal(err.stack || err.message);
         log.success(`listening on http://localhost:${settings.port}`);
     });
 })();

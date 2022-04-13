@@ -17,8 +17,7 @@
   "author": "Votion Development",
   "contributors": [
     "Devonte <https://github.com/devnote-dev>",
-    "v2Dev",
-    "Cblaze"
+    "Cblaze <https://github.com/blazecoding2009>"
   ],
   "license": "MIT",
   "bugs": {
@@ -30,7 +29,7 @@
     "ejs": "^3.1.6",
     "fastify": "^3.27.2",
     "fastify-cookie": "^5.6.0",
-    "fastify-static": "^4.6.1",
+    "fastify-formbody": "^5.2.0",
     "mongodb": "^4.4.0",
     "node-fetch": "^2.6.7",
     "path": "^0.12.7",

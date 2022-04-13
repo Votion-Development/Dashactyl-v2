@@ -1,4 +1,4 @@
-import { Account } from './structs';
+import { Account } from '../structures';
 
 export const permissions = [
     'account.update',

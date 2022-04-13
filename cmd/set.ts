@@ -1,5 +1,5 @@
 import db, { init } from '../database';
-import load from '../helpers/settings';
+import load from '../structures/settings';
 import log from '../logger';
 import validate from '../validate';
 
