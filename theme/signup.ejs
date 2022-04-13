@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
     <%- include("./components/head.ejs", {title: "Signup", description: "Signup page" }) %>
-
-    <body>
-        <%#- include('./components/navbar') %>
-        <form name="authLogin" action="/auth/signup" method="POST" onsubmit="return validate()">
-            <label for="username">Username</label><br>
+    <%#- include('./components/navbar') %>
+        <center>
+        <form name="authLogin" action="/auth/signup" method="POST" onsubmit="return validate()" class="signup">
+            <label for="username" >Username</label><br>
             <input type="text" id="username" name="username"><br>
             <label for="email">Email</label><br>
             <input type="email" id="email" name="email"><br>
@@ -14,6 +11,7 @@
             <input type="submit" value="Sign Up"><br><br>
         </form>
         <button onclick="window.location.href = '/auth/discord'">Sign up with Discord</button>
+        </center>
         <script>
             function validate() {
                 let missing = '';

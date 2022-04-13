@@ -1,35 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
     <%- include("./components/head.ejs", {title: "Login", description: "Login page" }) %>
-
-    <body>
         <%#- include('./components/navbar') %>
-        <form name="authLogin" action="/auth/login" method="POST" onsubmit="return validate()">
-            <label for="email">Email</label><br>
-            <input type="email" id="email" name="email"><br>
-            <label for="password">Password</label><br>
-            <input type="password" id="password" name="password"><br><br>
-            <input type="submit" value="Login"><br><br>
-        </form>
-        <%# TODO: implement 'continue as' feature %>
-        <button onclick="window.location.href = '/auth/discord'">Login with Discord</button>
+        <div style="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);border: 5px;padding: 10px; border-radius: 25px;background-color: aliceblue;">
+        <div style="top: 60%; width: 49%; transform: translate(0, 90%); float:left; color: black; font-size: 40px;"><center>Dashactyl </center></div>
+        <div style="width: 49%; float:right; color: black;">
+            <center>
+                <form name="authLogin" action="/auth/login" method="POST" onsubmit="return validate()">
+                    <label for="email">Email</label><br>
+                    <input style="border-radius: 5px;" type="email" id="email" name="email"><br>
+                    <label for="password">Password</label><br>
+                    <input style="--tw-ring-inset: var(--tw-empty, );--tw-ring-offset-width: 0px;--tw-ring-offset-color: #fff;--tw-ring-color: rgba(59,130,246,0.5);--tw-ring-offset-shadow: 0 0 #0000;--tw-ring-shadow: 0 0 #0000;" type="password" id="password" name="password"><br><br>
+                    <input class="custombutton" type="submit" value="Login"><br><br>
+                </form>
+                <%# TODO: implement 'continue as' feature %>
+                <button onclick="window.location.href = '/auth/discord'">Login with Discord</button>
+            </center>
+        </div>
+        </div>
         <script>
             function validate() {
                 let missing = '';
-                if (!document.forms['authLogin']['email'].value?.length) {
-                    missing = 'email';
-                }
+                if (!document.forms['authLogin']['email'].value?.length) missing = 'email';
                 if (!document.forms['authLogin']['password'].value?.length) {
-                    if (missing) {
-                        missing += 'and password ';
-                    } else {
-                        missing = 'password ';
-                    }
+                    if (missing) missing += 'and password ';
+                    else missing = 'password ';
                 }
                 if (missing) {
                     event.preventDefault();
                     // temp alert thing
-                    alert(missing +'field(s) was not provided.');
+                    alert(missing +' field(s) was not provided.');
                 }
             }
         </script>

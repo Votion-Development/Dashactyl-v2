@@ -1,7 +1,14 @@
-<!DOCTYPE html>
 <%- include("./components/head.ejs", {title: "Home", description: "Home page" }) %>
-    <body>
         <%#- include('./components/navbar') %>
-        <a href="/login">Login</a> or <a href="/signup">Signup</a>?
+        <div style="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);border: 5px;padding: 10px; border-radius: 25px;background-color: aliceblue;">
+            <div style="top: 50%; width: 48%; transform: translate(0, 50%); float:left; color: black; font-size: 40px;">
+                <center>Dashactyl</center>
+            </div>
+            <div style="width: 48%; float:right;">
+                <center>
+                    <a href="/login"><button class="buttonhome">Login</button></a><a href="/signup"><button class="buttonhome">Signup</button></a>              
+                </center>
+            </div>
+        </div>
     </body>
 </html>

@@ -20,18 +20,20 @@
 
     const res = ERRORS[code] || ERRORS[0];
 %>
-<!DOCTYPE html>
-<html lang="en">
+
     <%- include("./components/head.ejs", {title: res.name, description: "Internal Error" }) %>
-    <body>
-        <h1><%= code %> | <%= res.name %></h1>
-        <p><%= res.message %></p>
-        <% if (message) { %>
-            <p><%= message %></p>
-        <% } %>
-        <% if (Number(code) >= 500 && invite) { %>
-            <button onclick="window.location.href = '<%= invite %>'">Contact Administrators</button><br>
-        <% } %>
-        <button onclick="window.location.href = '/dashboard'">Go Back</button>
+    <div style="position: absolute;left: 50%;top: 50%;transform: translate(-50%, -50%);border: 5px;padding: 10px; border-radius: 25px;background-color: aliceblue;">
+        <center>
+            <h1><%= code %> | <%= res.name %></h1>
+            <p><%= res.message %></p>
+            <% if (message) { %>
+                <p><%= message %></p>
+            <% } %>
+            <% if (Number(code) >= 500 && invite) { %>
+                <button onclick="window.location.href = '<%= invite %>'">Contact Administrators</button><br>
+            <% } %>
+            <button onclick="window.location.href = '/dashboard'">Go Back</button>
+        </center>
+    </div>
     </body>
 </html>
