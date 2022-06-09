@@ -1,0 +1,9 @@
+port: 3003
+ssl: false
+secret: welikeSECRETSSSS
+environment: production
+debug: true
+
+# For MongoDB
+connection_uri: mongodb://urmom:dad@too-good-at-this.nvgyu
+database: Dashactyl-v2-Testing
